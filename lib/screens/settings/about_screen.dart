@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/constants.dart';
+import '../../widgets/app_logo.dart';
 
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
@@ -13,12 +14,23 @@ class AboutScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
+          const Center(child: AppLogo(size: 96)),
+          const SizedBox(height: 16),
           Text(
             AppConstants.appName,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
           ),
+          const SizedBox(height: 4),
+          Text(
+            AppConstants.appTagline,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+          ),
           const SizedBox(height: 8),
-          const Text('Version 1.0.0'),
+          const Text('Version 1.0.0', textAlign: TextAlign.center),
           const SizedBox(height: 16),
           Text(
             'Track income and expenses manually or by scanning receipts. Built with Flutter for personal finance in the Philippines (₱ default).',
@@ -30,7 +42,7 @@ class AboutScreen extends StatelessWidget {
             leading: const Icon(Icons.mail_outline),
             title: const Text('Send feedback'),
             onTap: () async {
-              final uri = Uri.parse('mailto:feedback@example.com?subject=Expense%20Tracker%20Feedback');
+              final uri = Uri.parse('mailto:feedback@example.com?subject=ExTra%20Feedback');
               if (await canLaunchUrl(uri)) {
                 await launchUrl(uri);
               }

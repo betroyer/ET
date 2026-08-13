@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/settings_provider.dart';
+import '../../utils/constants.dart';
+import '../../widgets/app_logo.dart';
 import '../../widgets/pin_keypad.dart';
 
 enum PinMode { unlock, setup }
@@ -35,15 +37,24 @@ class _PinLockScreenState extends State<PinLockScreen> {
           child: Column(
             children: [
               const Spacer(),
-              Icon(Icons.lock_outline, size: 48, color: Theme.of(context).colorScheme.primary),
-              const SizedBox(height: 16),
+              if (!isSetup) ...[
+                const AppLogo(size: 88),
+                const SizedBox(height: 12),
+                Text(
+                  AppConstants.appName,
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 20),
+              ] else
+                Icon(Icons.lock_outline, size: 48, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(height: 8),
               Text(
                 confirming
                     ? 'Confirm your PIN'
                     : isSetup
                         ? 'Create a 4-digit PIN'
                         : 'Enter PIN',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
               ),
               const SizedBox(height: 24),
               Row(

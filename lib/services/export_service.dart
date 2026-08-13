@@ -67,7 +67,7 @@ class ExportService {
         build: (context) => [
           pw.Header(
             level: 0,
-            child: pw.Text('Expense Tracker Report', style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold)),
+            child: pw.Text('ExTra Report', style: pw.TextStyle(fontSize: 22, fontWeight: pw.FontWeight.bold)),
           ),
           pw.Text('Generated ${DateFormatter.displayDateTime(DateTime.now())}'),
           pw.SizedBox(height: 16),

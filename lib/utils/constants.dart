@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppConstants {
-  static const appName = 'Expense Tracker';
+  static const appName = 'ExTra';
+  static const appTagline = 'Expense Tracker';
+  static const logoAsset = 'assets/images/extra_logo.png';
   static const defaultCurrencyCode = 'PHP';
   static const defaultCurrencySymbol = '₱';
 

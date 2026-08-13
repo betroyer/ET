@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../../providers/budget_provider.dart';
 import '../../providers/transaction_provider.dart';
 import '../../utils/currency_formatter.dart';
+import '../../widgets/app_logo.dart';
 import '../../widgets/balance_card.dart';
 import '../../widgets/quick_add_buttons.dart';
 import '../../widgets/transaction_tile.dart';
@@ -78,7 +79,7 @@ class _HomeTab extends StatelessWidget {
         physics: const AlwaysScrollableScrollPhysics(),
         slivers: [
           SliverAppBar.large(
-            title: const Text('Expense Tracker'),
+            title: const AppLogo(size: 36, showTitle: true),
             actions: [
               IconButton(
                 tooltip: 'Scan receipt',

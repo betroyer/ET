@@ -81,7 +81,7 @@ class _UnsupportedPlatformApp extends StatelessWidget {
                   Icon(Icons.phone_android, size: 64, color: AppConstants.brandTeal),
                   SizedBox(height: 20),
                   Text(
-                    'Expense Tracker is an Android app',
+                    'ExTra is an Android app',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
                   ),

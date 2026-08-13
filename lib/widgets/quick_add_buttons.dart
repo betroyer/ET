@@ -35,7 +35,7 @@ class QuickAddButtons extends StatelessWidget {
         Expanded(
           child: _ActionChip(
             icon: Icons.document_scanner_outlined,
-            label: 'Scan',
+            label: 'Receipt',
             onTap: onScanReceipt,
           ),
         ),
