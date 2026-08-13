@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 
 import '../../providers/budget_provider.dart';
@@ -175,6 +178,37 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Future<void> _restore(BuildContext context) async {
+    final backup = BackupService(DatabaseService.instance);
+    final files = await backup.listBackupFiles();
+    if (!context.mounted) return;
+
+    if (files.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No local backups found. Create a backup first.')),
+      );
+      return;
+    }
+
+    final selected = await showModalBottomSheet<File>(
+      context: context,
+      builder: (context) => SafeArea(
+        child: ListView(
+          shrinkWrap: true,
+          children: [
+            const ListTile(title: Text('Choose a backup', style: TextStyle(fontWeight: FontWeight.w700))),
+            ...files.map(
+              (f) => ListTile(
+                leading: const Icon(Icons.restore_outlined),
+                title: Text(p.basename(f.path)),
+                onTap: () => Navigator.pop(context, f),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (selected == null || !context.mounted) return;
+
     final ok = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
@@ -189,8 +223,7 @@ class SettingsScreen extends StatelessWidget {
     if (ok != true || !context.mounted) return;
 
     try {
-      final backup = BackupService(DatabaseService.instance);
-      final restored = await backup.restoreFromPicker();
+      final restored = await backup.restoreFromFile(selected);
       if (!restored || !context.mounted) return;
       await Future.wait([
         context.read<TransactionProvider>().load(),
