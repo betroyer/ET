@@ -53,7 +53,7 @@ class _ScanReceiptScreenState extends State<ScanReceiptScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Take a photo of your receipt. ExTra will read the items and amounts, then show them as an expense for you to confirm.',
+                    'Take a photo of your receipt. ExTra uses OCR to read each line, pull out product names, and match them with their prices.',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: scheme.onSurfaceVariant,
@@ -126,9 +126,10 @@ class _ScanReceiptScreenState extends State<ScanReceiptScreen> {
     });
 
     try {
-      final recognized = await _ocr.recognizeFromPath(file.path);
-      setState(() => _status = 'Finding expenses…');
-      final parsed = _parser.parse(recognized.text);
+      setState(() => _status = 'Reading receipt line by line…');
+      final ocr = await _ocr.recognizeStructured(file.path);
+      setState(() => _status = 'Matching products with prices…');
+      final parsed = _parser.parseOcr(ocr);
 
       if (!mounted) return;
 
